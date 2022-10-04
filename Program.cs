@@ -1,5 +1,29 @@
+using Microsoft.AspNetCore.Mvc;
+
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
+
+app.MapPost("/adicionarProdutos" , (Produto produto) => {
+    ProdutoRepository.AdicionarProduto(produto);
+});
+
+app.MapGet("/obterProduto/{code}", ([FromRoute] int code) => {
+    var visualizarProduto = ProdutoRepository.ObterProduto(code);
+    return visualizarProduto;
+});
+
+app.MapPut("/modificarProduto", (Produto produto) => {
+    var modificarProduto = ProdutoRepository.ObterProduto(produto.Id);
+    modificarProduto.Nome = produto.Nome;
+    modificarProduto.Preco = produto.Preco;
+    modificarProduto.Descricao = produto.Descricao;
+    modificarProduto.Quantidade = produto.Quantidade;
+});
+
+app.MapDelete("/deletarProduto/{code}", ([FromRoute] int code) => {
+    var deletarProduto = ProdutoRepository.ObterProduto(code);
+    ProdutoRepository.RemoverProdutos(deletarProduto);
+});
 
 app.Run();
 
