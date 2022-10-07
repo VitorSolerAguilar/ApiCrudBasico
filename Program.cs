@@ -3,16 +3,16 @@ using Microsoft.AspNetCore.Mvc;
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
-app.MapPost("/adicionarProdutos" , (Produto produto) => {
+app.MapPost("/Produtos" , (Produto produto) => {
     ProdutoRepository.AdicionarProduto(produto);
 });
 
-app.MapGet("/obterProduto/{code}", ([FromRoute] int code) => {
+app.MapGet("/Produto/{code}", ([FromRoute] int code) => {
     var visualizarProduto = ProdutoRepository.ObterProduto(code);
     return visualizarProduto;
 });
 
-app.MapPut("/modificarProduto", (Produto produto) => {
+app.MapPut("/Produto", (Produto produto) => {
     var modificarProduto = ProdutoRepository.ObterProduto(produto.Id);
     modificarProduto.Nome = produto.Nome;
     modificarProduto.Preco = produto.Preco;
@@ -20,7 +20,7 @@ app.MapPut("/modificarProduto", (Produto produto) => {
     modificarProduto.Quantidade = produto.Quantidade;
 });
 
-app.MapDelete("/deletarProduto/{code}", ([FromRoute] int code) => {
+app.MapDelete("/Produto/{code}", ([FromRoute] int code) => {
     var deletarProduto = ProdutoRepository.ObterProduto(code);
     ProdutoRepository.RemoverProdutos(deletarProduto);
 });
